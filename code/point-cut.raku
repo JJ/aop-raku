@@ -2,19 +2,17 @@
 
 my %SUB-COUNTS;
 
-say "Start";
-
-multi sub trait_mod:<is>(Sub $s where .name().contains("-logged"), :$AOP!) {
-    $s.wrap({
-        say "Entering { $s.name }";
-        callsame;
-    });
-}
-
 multi sub trait_mod:<is>(Sub $s where .name().contains("-counted"), :$AOP!) {
     $s.wrap({
         say "Counting { $s.name }";
         %SUB-COUNTS{$s.name}++;
+        callsame;
+    });
+}
+
+multi sub trait_mod:<is>(Sub $s where .name().contains("-logged"), :$AOP!) {
+    $s.wrap({
+        say "Entering { $s.name }";
         callsame;
     });
 }
