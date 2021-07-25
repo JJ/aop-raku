@@ -4,7 +4,7 @@
  * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Lexend&family=Qahiri&family=Roboto+Mono&family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend&family=Zen+Tokyo+Zoo&family=Roboto+Mono&family=Work+Sans&display=swap');
 
 .reveal a {
   line-height: 1.3em;
@@ -99,7 +99,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 }
 
 .reveal h1 {
-    font-family: 'Qahiri', sans-serif;
+    font-family: 'Zen Tokyo Zoo', sans-serif;
     font-size: var(--r-heading1-size);
 }
 
