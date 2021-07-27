@@ -4,19 +4,17 @@ sub doing-good() {
     return "good"
 };
 
-say doing-good();
-
 &doing-good.wrap( sub {
-    callsame unless Backtrace.new[*-2].subname ~~ /bad/;
+    return callsame unless Backtrace.new.grep: { .subname  ~~ /bad/ };
 });
 
 sub caller () {
-    say doing-good();
+    doing-good();
 }
 
-say caller;
+say "We're «{caller}»";
 
-sub bad-guy( ) {
+sub bad-guy() {
     caller;
 }
 
