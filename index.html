@@ -57,7 +57,23 @@
                               </h1>
                           </section>
 
-                          
+                          <section><h1>Introducing sub wraps</h1>
+                              <pre><code data-line-numbers="1-2|4-9|11-12|14-15">sub doing-good() { return "good" };
+say doing-good();
+
+&doing-good.wrap( sub {
+    my $bt = Backtrace.new;
+    my $interesting-sub = $bt[$bt.next-interesting-index(:named)].subname;
+    return  "Called from 🔈{$interesting-sub}🔈 →" ~ callsame;
+});
+say doing-good();
+
+sub caller() { doing-good(); }
+say caller;
+
+sub outer() { caller; }
+say outer();</code></pre>
+                          </section>
 			</div>
 		</div>
 
