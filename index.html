@@ -74,6 +74,14 @@ say caller;
 sub outer() { caller; }
 say outer();</code></pre>
                           </section>
+
+                          <section><h1>Or the whole trace</h1>
+                              <pre><code>&doing-good.wrap( sub {
+    my $bt = Backtrace.new;
+    my @subnames = $bt.grep: { .subname ~~ /^\w/ };
+    return  "Called from 🔈{@subnames.map( *.subname ).join(" ⇒ ")}🔈 →" ~
+            callsame;
+});</code></pre>
 			</div>
 		</div>
 

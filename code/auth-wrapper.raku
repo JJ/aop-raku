@@ -5,8 +5,9 @@ say doing-good();
 
 &doing-good.wrap( sub {
     my $bt = Backtrace.new;
-    my $interesting-sub = $bt[$bt.next-interesting-index(:named)].subname;
-    return  "Called from 🔈{$interesting-sub}🔈 →" ~ callsame;
+    my @subnames = $bt.grep: { .subname ~~ /^\w/ };
+    return  "Called from 🔈{@subnames.map( *.subname ).join(" ⇒ ")}🔈 →" ~
+            callsame;
 });
 
 say doing-good();
