@@ -81,8 +81,29 @@ say outer();</code></pre>
     my @subnames = $bt.grep: { .subname ~~ /^\w/ };
     return  "Called from 🔈{@subnames.map( *.subname ).join(" ⇒ ")}🔈 →" ~
             callsame;
-});</code></pre>
-			</div>
+});</code></pre><code><pre>Called from 🔈new ⇒ enter_with_args ⇒ enter ⇒ CALL-ME🔈 →good
+Called from 🔈new ⇒ enter_with_args ⇒ enter ⇒ CALL-ME ⇒ caller🔈 →good
+Called from 🔈new ⇒ enter_with_args ⇒ enter ⇒ CALL-ME ⇒ caller ⇒ outer🔈 →good</pre></code></section>
+
+                          <section>
+                              <h1>Let's aspect it</h1>
+                              <pre><code data-line-numbers="1-9|4,6-12|4-6,14-15">sub doing-good() {  return "good"} ;
+
+&doing-good.wrap( sub {
+    if Backtrace.new.grep: { .subname  ~~ /bad/ } {
+        fail("Not authorized to call this");
+    } else {
+        return callsame;
+    }
+});
+
+sub caller () { doing-good(); }
+say "We're «{caller}»";
+
+sub bad-guy() { caller; }
+say "And now «{bad-guy}»";</code></pre>
+                          </section>
+                        </div>
 		</div>
 
 		<script src="dist/reveal.js"></script>
