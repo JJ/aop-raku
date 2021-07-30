@@ -1,13 +1,13 @@
 use aspects;
-aspect LoggingAspect is MethodBoundaryAspect {
+class LoggingAspect is MethodBoundaryAspect {
     method entry($method, $obj, $args) {
         say "Called $method with $args";
     }
     method exit($method, $obj, $args, $result) {
-        say "$method returned with $result.perl()";
+        say "$method returned with $result.raku()";
     }
 }
-aspect Example is LoggingAspect {
+aspected Example is LoggingAspect {
     method double($x) { $x * 2 }
     method square($x) { $x ** 2 }
 }
