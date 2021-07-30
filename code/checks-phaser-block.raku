@@ -1,13 +1,13 @@
 #!/usr/bin/env perl6
 
-sub doing-good() will enter {
+my &doing-good is Block will enter {
     .add_phaser: "ENTER",
             {
                     if Backtrace.new.grep: { .subname  ~~ /bad/ } {
                             fail("Not authorized to call this");
                     }
             }
-}  {
+} = {
         "good"
 };
 
