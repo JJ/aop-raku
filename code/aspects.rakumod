@@ -1,12 +1,9 @@
 my class MethodBoundaryAspect is export {}
 
 multi trait_mod:<is>(Mu:U $type, MethodBoundaryAspect:U $aspect) is export {
-
-    if $aspect === MethodBoundaryAspect {
-        $type.HOW.add_parent($type, $aspect)
-    } elsif $aspect.^mro.map( *.^name).first( "MethodBoundaryAspect", :k ) > 0 {
-        $type.HOW.add_aspect($type, $aspect);
-    }
+    $aspect === MethodBoundaryAspect ??
+    $type.HOW.add_parent($type, $aspect) !!
+            $type.HOW.add_aspect($type, $aspect);
 }
 
 my class ClassWithAspectsHOW is Metamodel::ClassHOW {
