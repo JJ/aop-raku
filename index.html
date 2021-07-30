@@ -188,7 +188,7 @@ say water-logged();</code></pre>
         <section><h1>Defining several pointcuts</h1>
             <pre><code data-line-numbers="3,11|4,7|12,14">my %SUB-COUNTS;
 
-multi sub trait_mod:<is>(Sub $s where .name().contains("-counted"), :$AOP!) {
+multi sub trait_mod:&lt;is>(Sub $s where .name().contains("-counted"), :$AOP!) {
     $s.wrap({
         say "Counting { $s.name }";
         %SUB-COUNTS{$s.name}++;
@@ -196,7 +196,7 @@ multi sub trait_mod:<is>(Sub $s where .name().contains("-counted"), :$AOP!) {
     });
 }
 
-multi sub trait_mod:<is>(Sub $s where .name().contains("-logged"), :$AOP!) {
+multi sub trait_mod:&lt;is>(Sub $s where .name().contains("-logged"), :$AOP!) {
     $s.wrap({
         say "Entering { $s.name }";
         callsame;
@@ -227,7 +227,7 @@ say %SUB-COUNTS; # ⇒ {we're-also-counted => 10, we're-counted => 20}</code></p
             cuts to a single routine, multiple schedule will fail.</aside>
         </section>
 
-        <section><h1>Jonathan's high magic: Advices</h1>
+        <section><h2>Jonathan's high magic: Advices</h2>
         <pre><code data-line-numbers="9-16">my class MethodBoundaryAspect is export {}
 
 multi trait_mod:&lt;is>(Mu:U $type, MethodBoundaryAspect:U $aspect) is export {
@@ -245,7 +245,7 @@ class LoggingAspect is MethodBoundaryAspect {
     }
 }  </code></pre>
         </section>
-        <section><h1>Jonathan's magic aspects: point-cuts</h1>
+        <section><h2><code>jnthn</code>'s  aspects: point-cuts</h2>
             <pre><code data-line-numbers="8|10-12">my class ClassWithAspectsHOW is Metamodel::ClassHOW {
     has @!aspects;
     method add_aspect(Mu $obj, MethodBoundaryAspect:U $aspect) {
@@ -299,6 +299,8 @@ say Example.square(3); # ditto</code></pre>
             <h2 class="fragment">Multiple scheduling</h2>
             <h2 class="fragment">Metaprogramming</h2>
         </section>
+
+	<section><h1>Thank you</h1></section>
     </div>
 </div>
 
