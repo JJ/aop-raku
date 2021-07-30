@@ -167,6 +167,65 @@ do-stuff();</code></pre>
     concepts to their AOP equivalent.</aside>
         </section>
 
+        <section><h1>Defining our own traits</h1>
+            <pre><code data-line-numbers="3,6">multi sub trait_mod:<is>(Sub $s
+                where .name().contains("-logged"),
+                :$AOP){
+    say "⟨is AOP⟩ has been called on {$s.name}";
+}
+sub water-logged () is AOP {
+    return 'water'
+}
+
+say water-logged();</code></pre>
+            <h2 class="fragment">And point-cuts via signatures</h2>
+            <aside class="notes">In this case, we attach a generic trait
+            that doesn't really provide anything and, as a matter of
+                fact, only runs during declaration. But we can maybe
+                take this a bit further.</aside>
+        </section>
+
+        <section><h1>Defining several pointcuts</h1>
+            <pre><code data-line-numbers="3,11|4,7|12,14">my %SUB-COUNTS;
+
+multi sub trait_mod:<is>(Sub $s where .name().contains("-counted"), :$AOP!) {
+    $s.wrap({
+        say "Counting { $s.name }";
+        %SUB-COUNTS{$s.name}++;
+        callsame;
+    });
+}
+
+multi sub trait_mod:<is>(Sub $s where .name().contains("-logged"), :$AOP!) {
+    $s.wrap({
+        say "Entering { $s.name }";
+        callsame;
+    });
+}</code></pre>
+
+            <aside class="notes">We use the signatures as pointcuts, we know
+                the routine it's been attached to (in $s), and we can wrap
+                around it and call it.
+            </aside>
+        </section>
+
+        <section><h1>Put it to use</h1>
+<pre><code data-line-numbers="1,3|5-8,12">sub water-logged() is AOP { return "Water"; }
+
+sub out-logged() is AOP { return "Out"; }
+
+sub we're-counted() is AOP {
+    state $count = 0;
+    return $count++;
+}
+sub we're-also-counted() is AOP { "Well" }
+say water-logged(), " ", out-logged(), " ", water-logged();¡
+say we're-counted() for ^20;
+say %SUB-COUNTS; # ⇒ {we're-also-counted => 10, we're-counted => 20}</code></pre>
+        <aside class="notes">But we can't apply different advices to a
+            single function, because if we apply two different point
+            cuts to a single routine, multiple schedule will fail.</aside>
+        </section>
     </div>
 </div>
 

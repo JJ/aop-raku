@@ -17,28 +17,20 @@ multi sub trait_mod:<is>(Sub $s where .name().contains("-logged"), :$AOP!) {
     });
 }
 
-sub water-logged() is AOP {
-    return "Water";
-}
+sub water-logged() is AOP { return "Water"; }
 
-sub out-logged() is AOP {
-    return "Out";
-}
+sub out-logged() is AOP { return "Out"; }
 
 sub we're-counted() is AOP {
     state $count = 0;
     return $count++;
 }
 
-sub we're-counted-and-logged() is AOP {
-    state $alpha = 'a';
-    return $alpha++;
-}
+sub we're-also-counted() is AOP { "Well" }
 
 say water-logged(), " ", out-logged(), " ", water-logged();
 
 say we're-counted() for ^20;
-
-say we're-counted-and-logged() for ^20;
+say we're-also-counted() for ^10;
 
 say %SUB-COUNTS;
