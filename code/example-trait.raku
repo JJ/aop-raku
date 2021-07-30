@@ -1,6 +1,5 @@
 #!/usr/bin/env raku
 
-say 'start';
 multi sub trait_mod:<is>(Sub $s where .name().contains("-logged"), :$AOP){
     say "⟨is AOP⟩ has been called on {$s.name}";
 }
@@ -9,5 +8,4 @@ sub water-logged () is AOP {
 }
 
 say water-logged();
-say "And now ...";
-say water-logged();
+

@@ -6,9 +6,8 @@ sub show-value( $a-var ) {
 
 sub do-stuff () {
     ENTER { say "Going in"; }
-    our $bar will enter { show-value($_) };
+    our $bar will leave { show-value($_) };
     $bar = "baz";
     LEAVE { say "Leaving"; }
 }
-our $h will leave { say "\$h"; dd $_ } = 33;
 do-stuff();
